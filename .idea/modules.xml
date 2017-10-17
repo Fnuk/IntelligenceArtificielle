@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/IA_Hexgame.iml" filepath="$PROJECT_DIR$/.idea/IA_Hexgame.iml" />
+      <module fileurl="file://D:/IntelligenceArtificielle/hexgame/.idea/hexgame.iml" filepath="D:/IntelligenceArtificielle/hexgame/.idea/hexgame.iml" />
+    </modules>
+  </component>
+</project>
