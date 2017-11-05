@@ -1,8 +1,9 @@
-
+from EvaluationFunction import EvaluationFunction
+import random
 
 class Player (object):
 
-     def move(self, board, player):
+     def move(self, board, profondeur, player):
 
           first_play = True
 
@@ -13,19 +14,64 @@ class Player (object):
           if(first_play):
                board[5][5] = player
           else:
-               i = 0
-               j = 0
-               while board[i][j] != 0 or (i==10 and j==10):
-                    if(player == 1):
-                         j += 1
-                         if j > 10:
-                              j = 0
-                              i += 1
-                    else :
-                         i += 1
-                         if i > 10:
-                              i = 0
-                              j += 1
+              max = -10000
+              i = 0
+              j = 0
+              maxi = 0
+              maxj = 0
+              tmp = 0
 
-                    print("position jouée :"+i+", "+j)
+              for i in range(11):
+                  for j in range(11):
+                      if board[i][j] == 0:
+                          board[i][j] = player
+                          tmp = self.Min(board, profondeur - 1, player)
+                          if tmp > max or ((tmp == max) and (random.randint(0, 1000) % 2 == 0)):
+                              max = tmp;
+                              maxi = i;
+                              maxj = j;
+                          board[i][j] = 0
 
+              board[maxi][maxj] = 1
+
+
+     def Max(self, board, profondeur, joueur):
+          if profondeur == 0 or board.winner() == True :
+               return EvaluationFunction()
+
+          max = -10000
+          i = 0
+          j = 0
+          tmp = 0
+
+          for i in range(11):
+               for j in range(11):
+                    if board[i][j] == 0 :
+                         board[i][j] = joueur
+                         tmp = self.Min(board, profondeur-1, joueur)
+                         if (tmp > max or ((tmp == max) and (random.randint(0,1000) % 2 == 0))):
+                              max = tmp
+                         board[i][j] = 0
+
+
+          return max
+
+     def Min(self, board, profondeur, joueur):
+          if profondeur == 0 or board.winner() == True:
+               return EvaluationFunction()
+
+          min = 10000
+          i = 0
+          j = 0
+          tmp = 0
+
+          for i in range(11):
+               for j in range(11):
+                    if board[i][j] == 0:
+                         board[i][j] = joueur
+                         tmp = self.Max(board, profondeur - 1, joueur)
+                         if (tmp < min or ((tmp == min) and (random.randint(0,1000) % 2 == 0))):
+                              min = tmp
+                         board[i][j] = 0
+
+          return min
